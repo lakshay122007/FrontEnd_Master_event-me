@@ -1,21 +1,30 @@
-import { Calendar } from './Icons.js';
-
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Events = exports.EventsSection = exports.EventCard = exports.EventModal = void 0;
+const Icons_js_1 = require("./Icons.js");
 const API_URL = import.meta.env.VITE_API_URL;
-
-const loadEventsData = async () => {
-  try {
-    const response = await fetch(`${API_URL}/events`);
-    return response.json();
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-
-export const EventModal = (event) => {
-  const formId = `rsvp-form-${event.ID}`;
-  const modalId = `modal-event-${event.id}`
-  return `<dialog id="${modalId}">
+const loadEventsData = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield fetch(`${API_URL}/events`);
+        return response.json();
+    }
+    catch (e) {
+        console.error(e);
+    }
+});
+const EventModal = (event) => {
+    const formId = `rsvp-form-${event.ID}`;
+    const modalId = `modal-event-${event.id}`;
+    return `<dialog id="${modalId}">
       <article>
         <header>
           <button
@@ -49,57 +58,59 @@ export const EventModal = (event) => {
 
         </footer>
       </article>
-    </dialog>`
-}
-
-export const EventCard = (e) => {
-  const eventDate = new Date(e.date);
-  const isPast = eventDate < new Date();
-  return `
+    </dialog>`;
+};
+exports.EventModal = EventModal;
+const EventCard = (e) => {
+    var _a, _b;
+    const eventDate = new Date(e.date);
+    const isPast = eventDate < new Date();
+    return `
 <article class="event" >
 <header>
     ${e.image_url && `<img src=${e.image_url} alt="${e.title} thumbnail" />`}
 </header>
     <main>
         <h4>${e.title}</h4>
-        <p>${Calendar} ${eventDate.toLocaleDateString()}</p>
-        <p>Host: ${e.host?.name || `User ${e.host_id}`}</p>
+        <p>${Icons_js_1.Calendar} ${eventDate.toLocaleDateString()}</p>
+        <p>Host: ${((_a = e.host) === null || _a === void 0 ? void 0 : _a.name) || `User ${e.host_id}`}</p>
 
         ${e.description && `<p>${e.description}</p>`}
     </main>
     <footer>
         <span>
-            ${e.rsvps?.length || 0} ${isPast ? 'went' : 'going'}
+            ${((_b = e.rsvps) === null || _b === void 0 ? void 0 : _b.length) || 0} ${isPast ? 'went' : 'going'}
         </span>
         ${!isPast ? `
             <button role="button" data-target="modal-event-${e.id}" class="toggle-modal"
             title="RSVP to ${e.title}"
             >
         RSVP
-        </button>`: ''}
+        </button>` : ''}
     </footer>
-    ${EventModal(e)}
+    ${(0, exports.EventModal)(e)}
 </article>
-    `
-}
-
-export const EventsSection = (title, events) => {
-  return `
+    `;
+};
+exports.EventCard = EventCard;
+const EventsSection = (title, events) => {
+    return `
   <section class='events'>
       <h2>${title} events </h2>
           <div role = "group">
-              ${events.map((e) => EventCard(e)).join('') || 'No events'}
+              ${events.map((e) => (0, exports.EventCard)(e)).join('') || 'No events'}
       </div>
   </section>`;
-}
-
+};
+exports.EventsSection = EventsSection;
 // IIFE to asynchronously load the Event data before exporting the component
 // https://developer.mozilla.org/en-US/docs/Glossary/IIFE
-export const Events = await (async () => {
-  const all = await loadEventsData();
-  const past = all.filter((e) => (new Date(e.date) < new Date()));
-  const upcoming = all.filter((e) => (new Date(e.date) > new Date()));
-  return `
-    ${EventsSection('Upcoming', upcoming)}
-    ${EventsSection('Past', past)}
-`})()
+exports.Events = await (() => __awaiter(void 0, void 0, void 0, function* () {
+    const all = yield loadEventsData();
+    const past = all.filter((e) => (new Date(e.date) < new Date()));
+    const upcoming = all.filter((e) => (new Date(e.date) > new Date()));
+    return `
+    ${(0, exports.EventsSection)('Upcoming', upcoming)}
+    ${(0, exports.EventsSection)('Past', past)}
+`;
+}))();
