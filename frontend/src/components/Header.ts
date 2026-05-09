@@ -18,7 +18,7 @@ const toggleDarkMode = () => {
     const doc = document.documentElement;
     const currentTheme = doc.getAttribute('data-theme');
     if (currentTheme === 'dark') {
-        doc.setAttribute('data-theme', 'lite');
+        doc.setAttribute('data-theme', 'light');
     } else if (currentTheme === 'light') {
         doc.setAttribute('data-theme', 'dark');
     }
