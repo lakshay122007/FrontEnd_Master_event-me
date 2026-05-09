@@ -25,7 +25,9 @@ const toggleDarkMode = () => {
 }
 export function setupThemeToggle() {
     const themeToggle = document.getElementById(themeToggleId);
-    themeToggle.addEventListener('click', toggleDarkMode);
+    if(themeToggle){
+        themeToggle.addEventListener('click', toggleDarkMode);
+    }
 
 }
 
