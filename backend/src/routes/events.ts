@@ -9,7 +9,7 @@ const joinHost = (event:
 ) => {
   const host = getUser(event.host_id);
   return { ...event, host };
-}
+}xq
 
 const joinRSVPs = (event: Event) => {
   const { id } = event;
