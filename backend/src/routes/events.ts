@@ -4,12 +4,14 @@ import { getUser } from './users.js';
 
 const router = Router();
 
-const joinHost = (event) => {
+const joinHost = (event:
+  
+) => {
   const host = getUser(event.host_id);
   return { ...event, host };
 }
 
-const joinRSVPs = (event) => {
+const joinRSVPs = (event: Event) => {
   const { id } = event;
   const getRSVPs = db.prepare('SELECT * FROM rsvps WHERE event_id = @id');
   const rsvps = getRSVPs.all({ id });
