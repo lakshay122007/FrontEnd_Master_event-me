@@ -1,5 +1,8 @@
-interface Event {
-  id: number;
+export type Id = number;
+
+
+export interface Event {
+  id: Id;
   title: string;
   description?: string;
   date: Date;
@@ -19,6 +22,6 @@ interface User {
 
 interface Rsvp {
   id: number;
-  event_id: number;
-  user_id: number;
+  number: number;
+  email: number;
 }

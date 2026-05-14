@@ -1,15 +1,14 @@
 import db from '../db.js';
 import { Router } from 'express';
 import { getUser } from './users.js';
+import type { Event, Id } from '../types.js';
 
 const router = Router();
 
-const joinHost = (event:
-  
-) => {
+const joinHost = (event: Event) => {
   const host = getUser(event.host_id);
   return { ...event, host };
-}xq
+}
 
 const joinRSVPs = (event: Event) => {
   const { id } = event;
@@ -18,7 +17,7 @@ const joinRSVPs = (event: Event) => {
   return { ...event, rsvps };
 }
 
-const getEvent = (eventId) => {
+const getEvent = (eventId: Id) => {
   const byId = db.prepare('SELECT * FROM events WHERE id = @eventId');
   const event = byId.get({ eventId });
   return joinHost(event);
