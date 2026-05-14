@@ -13,15 +13,15 @@ export interface Event {
 
 }
 
-interface User {
+export interface User {
   id: number;
   name: string;
   email: string;
 }
 
 
-interface Rsvp {
+export interface Rsvp {
   id: number;
   number: number;
-  email: number;
+  email: string;
 }

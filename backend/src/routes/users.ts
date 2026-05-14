@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import db from '../db.js';
-import type { Id } from '../types.ts';
+import type { User } from '../types.ts';
 
 const router = Router();
 
-export const getUser = (userId: Id) => {
+
+
+export const getUser = (userId: User['id']) => {
   const byId = db.prepare('SELECT * FROM users WHERE id = @userId');
   return byId.get({ userId });
 }
